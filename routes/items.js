@@ -37,7 +37,6 @@ router.get('/', (req, res, next) =>{
 });
 
 router.post('/add', upload.single('img'), (req, res, next) => {
-    
     //input check
     if (!req.body.name || req.body.name == ''){
         res.json({
@@ -77,5 +76,23 @@ router.post('/add', upload.single('img'), (req, res, next) => {
         }
     });
 });
+
+router.delete('/:id', (req, res, next) =>{
+    Item.deleteOne({_id: req.params.id}, (err, data) => {
+       if (err){
+           res.json({
+               success: false,
+               id: req.params.id
+           });
+       } 
+       else if (data){
+           res.json({
+               success: true,
+               id: req.params.id
+           }); 
+       } 
+
+    });
+})
 
 module.exports = router;
